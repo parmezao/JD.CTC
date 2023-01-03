@@ -23,7 +23,6 @@ namespace JD.CTC.Data.Repositories.DataContext
         {
             modelBuilder.Entity<Legado>().ToTable("TBJDCTC_LEGADO");
             modelBuilder.Entity<Legado>().HasNoKey();
-            modelBuilder.Entity<Legado>().Ignore(x => x.Id);
             modelBuilder.Entity<Legado>().Property(x => x.NomeLegado).HasColumnName("NMLEGADO");
             modelBuilder.Entity<Legado>().Property(x => x.SitLegado).HasColumnName("STLEGADO");
         }

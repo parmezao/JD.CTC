@@ -15,11 +15,11 @@ namespace JD.CTC.Data.Repositories.Repository
         private readonly CTCContext _context;
         private readonly IDbConnection _connection;
 
-        public LegadoRepository(IDbConnection connection, IConfiguration configuration)
+        public LegadoRepository(
+            IDbConnection connection, 
+            CTCContext context)
         {
-            //_context = context;
-            _context = new CTCContext(@"Data Source=JDTST;Initial Catalog=DIANA_JDCTC_JD_NovaMod;User ID=jdteste;Password=jdteste;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-
+            _context = context;
             _connection = connection;
         }
 

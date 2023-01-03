@@ -1,3 +1,4 @@
+using JD.CTC.Data.Repositories.DataContext;
 using JD.CTC.Data.Repositories.Interfaces;
 using JD.CTC.Data.Repositories.Repository;
 using JD.CTC.Presentation.Blazor.Data;
@@ -42,6 +43,7 @@ namespace JD.CTC.Presentation.Blazor
             };
 
             services.AddSingleton<IDbConnection>(x => new Microsoft.Data.SqlClient.SqlConnection(conbuilder.ToString()));
+            services.AddSingleton(p => new CTCContext(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddScoped<ILegadoRepository, LegadoRepository>();
         }
