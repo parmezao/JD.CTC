@@ -25,8 +25,7 @@ namespace JD.CTC.Data.Repositories.Repository
 
         public async Task<IEnumerable<Legado>> GetLegadosAsync()
         {
-            var legado = await _context.Legado.ToListAsync();
-            return legado;
+            return await _context.Legado.ToListAsync();
         }
 
         public async Task<IEnumerable<Legado>> GetLegadosDapperAsync()
@@ -36,8 +35,7 @@ namespace JD.CTC.Data.Repositories.Repository
 	                           STLEGADO SitLegado
                           FROM TBJDCTC_LEGADO";
 
-            var legado = await _connection.QueryAsync<Legado>(sql);
-            return legado;
+            return await _connection.QueryAsync<Legado>(sql);
         }
     }
 }

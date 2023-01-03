@@ -3,17 +3,11 @@ using JD.CTC.Data.Repositories.Interfaces;
 using JD.CTC.Data.Repositories.Repository;
 using JD.CTC.Presentation.Blazor.Data;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JD.CTC.Presentation.Blazor
 {
@@ -34,6 +28,8 @@ namespace JD.CTC.Presentation.Blazor
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
+
+            // Registra os serviços de conexão (EntityFramework e Dapper).
             var conbuilder = new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(Configuration["ConnectionStrings:DefaultConnection"])
             {
                 ConnectTimeout = 90,
@@ -41,10 +37,11 @@ namespace JD.CTC.Presentation.Blazor
                 ConnectRetryCount = 10,
                 MultipleActiveResultSets = true
             };
-
             services.AddSingleton<IDbConnection>(x => new Microsoft.Data.SqlClient.SqlConnection(conbuilder.ToString()));
             services.AddSingleton(p => new CTCContext(Configuration["ConnectionStrings:DefaultConnection"]));
+            
 
+            // Registra os Repositórios
             services.AddScoped<ILegadoRepository, LegadoRepository>();
         }
 

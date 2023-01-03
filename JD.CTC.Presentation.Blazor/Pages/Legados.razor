@@ -10,12 +10,13 @@
 
 @if (legados == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Carregando...</em></p>
 }
 else
 {
-    <table class="table dark">
-        <thead>
+    <table class="table table-striped">
+        <caption>Legados obtidos utilizando: EntityFramework</caption>
+        <thead class="thead-dark">
             <tr>
                 <th>Cod Legado</th>
                 <th>Nome</th>
@@ -34,13 +35,60 @@ else
         </tbody>
     </table>
 }
+<br />
+@if (legadosDappper == null)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <caption>Legados obtidos utilizando: Dapper</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th>Cod Legado</th>
+                <th>Nome</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var legado in legadosDappper)
+            {
+                <tr>
+                    <td>@legado.CdLegado</td>
+                    <td>@legado.NomeLegado</td>
+                    <td>@legado.SitLegado.ToSituacaoLegado()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<br />
+<input @onclick="RefreshScreen" type="button" class="btn btn-primary" value="Atualizar" />
+
 
 @code {
+
     private IEnumerable<Legado> legados;
+    private IEnumerable<Legado> legadosDappper;
 
     protected override async Task OnInitializedAsync()
     {
+        await Refresh();
+    }
+
+    protected async Task Refresh()
+    {
+        // Obtém os dados utilizando EntityFramework
         legados = await repository.GetLegadosAsync();
-        //legados = await repository.GetLegadosDapperAsync();
+
+        // Obtém os dados utilizando a extensão Dapper
+        legadosDappper = await repository.GetLegadosDapperAsync();
+    }
+
+    protected async Task RefreshScreen(MouseEventArgs e)
+    {
+        await Refresh();
+        StateHasChanged();
     }
 }
