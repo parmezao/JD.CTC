@@ -25,7 +25,9 @@ namespace JD.CTC.Data.Repositories.Repository
 
         public async Task<IEnumerable<Legado>> GetLegadosAsync()
         {
-            return await _context.Legado.ToListAsync();
+            return await _context.Legado
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Legado>> GetLegadosDapperAsync()
