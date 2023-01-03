@@ -1,0 +1,46 @@
+﻿@page "/legados"
+
+@using JD.CTC.Data.Repositories.Interfaces;
+@using JD.CTC.Shared.Model;
+@using JD.CTC.Shared.Extensions;
+@inject ILegadoRepository repository;
+
+<h1>Legados</h1>
+<br />
+
+@if (legados == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table dark">
+        <thead>
+            <tr>
+                <th>Cod Legado</th>
+                <th>Nome</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var legado in legados)
+            {
+                <tr>
+                    <td>@legado.CdLegado</td>
+                    <td>@legado.NomeLegado</td>
+                    <td>@legado.SitLegado.ToSituacaoLegado()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Legado> legados;
+
+    protected override async Task OnInitializedAsync()
+    {
+        legados = await repository.GetLegadosAsync();
+        //legados = await repository.GetLegadosDapperAsync();
+    }
+}
