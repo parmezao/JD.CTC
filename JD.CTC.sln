@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1CBCDD5C-1B3D-4EC8-8D5F-2B33FF3C6600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JD.CTC.Data.Repositories", "JD.CTC.Data.Repositories\JD.CTC.Data.Repositories.csproj", "{90372871-B032-4801-A614-FD766D155F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JD.CTC.Data.Repositories", "JD.CTC.Data.Repositories\JD.CTC.Data.Repositories.csproj", "{90372871-B032-4801-A614-FD766D155F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JD.CTC.Shared", "JD.CTC.Shared\JD.CTC.Shared.csproj", "{29245988-556C-462F-BD55-543F4DABE6C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JD.CTC.Shared", "JD.CTC.Shared\JD.CTC.Shared.csproj", "{29245988-556C-462F-BD55-543F4DABE6C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JD.CTC.Presentation.Blazor", "JD.CTC.Presentation.Blazor\JD.CTC.Presentation.Blazor.csproj", "{043A8B81-9344-4F59-9796-6B344ABB54B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JD.CTC.Presentation.Blazor", "JD.CTC.Presentation.Blazor\JD.CTC.Presentation.Blazor.csproj", "{043A8B81-9344-4F59-9796-6B344ABB54B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,8 +4,10 @@
 @using JD.CTC.Shared.Model;
 @using JD.CTC.Shared.Extensions;
 @using Microsoft.Extensions.Configuration;
+
 @inject ILegadoRepository repository;
 @inject IConfiguration configuration;
+@inject NavigationManager navigationManager;
 
 <h1>Legados</h1>
 <br />
@@ -66,9 +68,10 @@ else
         </tbody>
     </table>
 }
-<br />
-<input @onclick="RefreshScreen" type="button" class="btn btn-primary" value="Atualizar" />
 
+<input @onclick="RefreshScreen" type="button" class="btn btn-primary" value="Atualizar" />
+<input @onclick="IncluirAlterarLegado" type="button" class="btn btn-primary" value="Incluir" />
+<br />
 
 @code {
 
@@ -96,5 +99,10 @@ else
     {
         await Refresh();
         StateHasChanged();
+    }
+
+    protected void IncluirAlterarLegado()
+    {
+        navigationManager.NavigateTo("/legados/incluir");
     }
 }

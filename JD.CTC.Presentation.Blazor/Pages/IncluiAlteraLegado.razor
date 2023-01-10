@@ -1,0 +1,53 @@
+﻿@page "/legados/incluir"
+@using JD.CTC.Shared.Model;
+@inject NavigationManager navigationManager;
+
+
+<h2>Inclusão de Legado</h2>
+<br />
+
+
+<EditForm Model="@legado" OnValidSubmit="SalvarLegado" OnInvalidSubmit="LegadoInvalido">
+
+    <FluentValidationValidator />
+
+    <div class="form-group">
+        <label for="CdLegado">Cod Legado</label>
+        <InputText id="CdLegado" class="form-control" @bind-Value="legado.CdLegado"></InputText>
+        <ValidationMessage For="() => legado.CdLegado" />
+    </div>
+
+    <div class="form-group">
+        <label for="NmLegado">Nome</label>
+        <InputText id="NmLegado" class="form-control" @bind-Value="legado.NomeLegado"></InputText>
+        <ValidationMessage For="() => legado.NomeLegado" />
+    </div>
+
+    <div class="form-group">
+        <label for="StLegado">Situação</label>
+        <InputText id="StLegado" class="form-control" @bind-Value="legado.SitLegado"></InputText>
+        <ValidationMessage For="() => legado.SitLegado" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <input type="button" value="Cancelar" class="btn btn-danger" @onclick="@(() => navigationManager.NavigateTo("/legados"))" />
+
+</EditForm>
+
+
+@code{
+
+    private Legado legado = new Legado();
+
+    private void SalvarLegado()
+    {
+        Console.WriteLine("Formulario Salvo com sucesso!");
+    }
+
+    private void LegadoInvalido()
+    {
+        Console.WriteLine("Formulario conem dados inválidos!");
+    }
+
+}
+
