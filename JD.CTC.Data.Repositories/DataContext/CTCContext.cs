@@ -16,7 +16,7 @@ namespace JD.CTC.Data.Repositories.DataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer(_connectionString);            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)        

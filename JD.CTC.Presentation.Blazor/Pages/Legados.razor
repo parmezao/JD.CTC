@@ -3,7 +3,9 @@
 @using JD.CTC.Data.Repositories.Interfaces;
 @using JD.CTC.Shared.Model;
 @using JD.CTC.Shared.Extensions;
+@using Microsoft.Extensions.Configuration;
 @inject ILegadoRepository repository;
+@inject IConfiguration configuration;
 
 <h1>Legados</h1>
 <br />
@@ -15,7 +17,7 @@
 else
 {
     <table class="table table-striped">
-        <caption>Legados obtidos utilizando: EntityFramework</caption>
+        <caption>Legados obtidos utilizando: EntityFramework</caption>        
         <thead class="thead-dark">
             <tr>
                 <th>Cod Legado</th>
@@ -44,6 +46,7 @@ else
 {
     <table class="table table-striped">
         <caption>Legados obtidos utilizando: Dapper</caption>
+        <caption>Base de Dados: @tipoBanco</caption>
         <thead class="thead-dark">
             <tr>
                 <th>Cod Legado</th>
@@ -71,10 +74,13 @@ else
 
     private IEnumerable<Legado> legados;
     private IEnumerable<Legado> legadosDappper;
+    private string tipoBanco;
 
     protected override async Task OnInitializedAsync()
     {
         await Refresh();
+
+        tipoBanco = configuration["TipoBanco"];
     }
 
     protected async Task Refresh()

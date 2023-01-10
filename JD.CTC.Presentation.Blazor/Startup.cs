@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data;
+using Oracle.ManagedDataAccess.Client;
+using Microsoft.Data.SqlClient;
 
 namespace JD.CTC.Presentation.Blazor
 {
@@ -30,16 +32,38 @@ namespace JD.CTC.Presentation.Blazor
 
 
             // Registra os serviços de conexão (EntityFramework e Dapper).
-            var conbuilder = new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(Configuration["ConnectionStrings:DefaultConnection"])
+            var tipoBanco = Configuration["TipoBanco"].ToString();
+
+            switch (tipoBanco)
             {
-                ConnectTimeout = 90,
-                ConnectRetryInterval = 5,
-                ConnectRetryCount = 10,
-                MultipleActiveResultSets = true
-            };
-            services.AddSingleton<IDbConnection>(x => new Microsoft.Data.SqlClient.SqlConnection(conbuilder.ToString()));
-            services.AddSingleton(p => new CTCContext(Configuration["ConnectionStrings:DefaultConnection"]));
-            
+                case "Oracle":
+                {
+                    var conbuilderOracle = new OracleConnectionStringBuilder(Configuration["ConnectionStrings:OracleConnection"])
+                    {
+                        ConnectionTimeout = 90,
+                    };
+                    services.AddSingleton<IDbConnection>(x => new OracleConnection(conbuilderOracle.ToString()));
+
+                    break;
+                };
+                case "SQLServer":
+                    {
+                        var conbuilder = new SqlConnectionStringBuilder(Configuration["ConnectionStrings:DefaultConnection"])
+                        {
+                            ConnectTimeout = 90,
+                            ConnectRetryInterval = 5,
+                            ConnectRetryCount = 10,
+                            MultipleActiveResultSets = true
+                        };
+                        services.AddSingleton<IDbConnection>(x => new SqlConnection(conbuilder.ToString()));
+
+                        break;
+                    };
+                default:
+                    break;
+            }
+
+            services.AddSingleton(p => new CTCContext(Configuration["ConnectionStrings:DefaultConnection"]));            
 
             // Registra os Repositórios
             services.AddScoped<ILegadoRepository, LegadoRepository>();
