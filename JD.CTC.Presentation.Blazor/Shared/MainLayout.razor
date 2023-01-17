@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+@inject JD.CTC.Shared.Interfaces.IUsuarioLogado usuarioLogado
+
 <div class="sidebar">
     <NavMenu />
 </div>
@@ -8,7 +10,8 @@
     <div class="top-row px-4">
         <AuthorizeView>
             <Authorized>
-                <span class="mgrt10"><span class="bold dgrey">Usuário:</span> @context.User.Identity.Name</span>
+                <span class="mgrt10"><span class="bold dgrey">Usuário:</span> @context.User.Identity.Name</span>&nbsp;&nbsp;-&nbsp;&nbsp;
+                <span class="mgrt10"><span class="bold dgrey">Perfil:</span> @perfil</span>
                 <a href="account/logout">Sair</a>
             </Authorized>
 
@@ -22,3 +25,16 @@
         @Body
     </div>
 </div>
+
+@code{
+    private string perfil;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await usuarioLogado.IsAuthenticated())
+        {
+            perfil = await usuarioLogado.Role();
+        }
+    }
+
+}

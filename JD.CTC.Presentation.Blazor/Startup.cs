@@ -13,6 +13,8 @@ using Microsoft.Data.SqlClient;
 using JD.CTC.Shared.Model.Acesso;
 using Microsoft.AspNetCore.Identity;
 using System;
+using JD.CTC.Presentation.Blazor.Security;
+using JD.CTC.Shared.Interfaces;
 
 namespace JD.CTC.Presentation.Blazor
 {
@@ -80,6 +82,8 @@ namespace JD.CTC.Presentation.Blazor
 
             // Registra os Repositórios
             services.AddScoped<ILegadoRepository, LegadoRepository>();
+            services.AddScoped<IUsuarioLogado, UsuarioLogado>();
+
 
             services.AddIdentity<ApplicationUser, ApplicationRole>();                
             services.AddTransient<IUserStore<ApplicationUser>, FakeCustomUserStore>();
