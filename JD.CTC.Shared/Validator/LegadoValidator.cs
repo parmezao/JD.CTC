@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using JD.CTC.Shared.Model;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace JD.CTC.Shared.Validator
 {

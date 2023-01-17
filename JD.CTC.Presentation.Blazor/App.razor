@@ -1,11 +1,23 @@
 ﻿
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            @*<RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />*@
+
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <div class="contgroup warnbox">
+                        <h2 class="fs20 text-center red mgtp20 mgbt20 bold">Você não tem permissão para acessa essa página.</h2>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <CascadingAuthenticationState>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <div class="contgroup warnbox">
+                        <h2 class="fs20 text-center red mgtp20 mgbt20 bold">A página que você tentou acessar não existe.</h2>
+                    </div>
+                </LayoutView>
+            </CascadingAuthenticationState>
+        </NotFound>
+    </Router>

@@ -3,11 +3,17 @@
 @using JD.CTC.Data.Repositories.Interfaces;
 @using JD.CTC.Shared.Model;
 @using JD.CTC.Shared.Extensions;
+@using JD.CTC.Shared.Model.Acesso;
+@using Microsoft.AspNetCore.Identity;
 @using Microsoft.Extensions.Configuration;
+@using System.Security.Claims;
 
 @inject ILegadoRepository repository;
 @inject IConfiguration configuration;
 @inject NavigationManager navigationManager;
+@inject UserManager<ApplicationUser> userManager;
+@inject SignInManager<ApplicationUser> signInManager;
+
 
 <h1>Legados</h1>
 <br />
@@ -73,11 +79,16 @@ else
 <input @onclick="IncluirAlterarLegado" type="button" class="btn btn-primary" value="Incluir" />
 <br />
 
+
+
 @code {
 
     private IEnumerable<Legado> legados;
     private IEnumerable<Legado> legadosDappper;
     private string tipoBanco;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationStateTask { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -105,4 +116,6 @@ else
     {
         navigationManager.NavigateTo("/legados/incluir");
     }
+
+
 }

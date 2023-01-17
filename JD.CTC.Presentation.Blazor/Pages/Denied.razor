@@ -1,0 +1,17 @@
+﻿@page "/Denied"
+@page "/Denied/{mensagem}"
+
+<div class="contgroup warnbox">
+    <h2 class="fs20 text-center red mgtp20 mgbt20 bold">Acesso Negado.<br />@mensagem</h2>
+</div>
+
+@code {
+    string _mensagem;
+
+    [Parameter] 
+    public string mensagem
+    {
+        get => string.IsNullOrEmpty(_mensagem) ? "" : "Motivo: " + System.Text.Encoding.Default.GetString(System.Convert.FromBase64String(_mensagem));
+        set => _mensagem = value;
+    }
+}

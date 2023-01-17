@@ -10,6 +10,9 @@ using Microsoft.Extensions.Hosting;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Microsoft.Data.SqlClient;
+using JD.CTC.Shared.Model.Acesso;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace JD.CTC.Presentation.Blazor
 {
@@ -26,8 +29,18 @@ namespace JD.CTC.Presentation.Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpContextAccessor();
             services.AddRazorPages();
+            services.AddControllers();
             services.AddServerSideBlazor();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.ExpireTimeSpan = TimeSpan.FromHours(3);
+                config.SlidingExpiration = true;
+            });
+
             services.AddSingleton<WeatherForecastService>();
 
 
@@ -67,6 +80,10 @@ namespace JD.CTC.Presentation.Blazor
 
             // Registra os Repositórios
             services.AddScoped<ILegadoRepository, LegadoRepository>();
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>();                
+            services.AddTransient<IUserStore<ApplicationUser>, FakeCustomUserStore>();
+            services.AddTransient<IRoleStore<ApplicationRole>, CustomRoleStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,11 +102,14 @@ namespace JD.CTC.Presentation.Blazor
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

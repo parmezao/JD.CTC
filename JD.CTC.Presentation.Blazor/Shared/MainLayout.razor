@@ -6,7 +6,16 @@
 
 <div class="main">
     <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <AuthorizeView>
+            <Authorized>
+                <span class="mgrt10"><span class="bold dgrey">Usuário:</span> @context.User.Identity.Name</span>
+                <a href="account/logout">Sair</a>
+            </Authorized>
+
+            <NotAuthorized>
+                <span><a href="account/autenticar">Entrar</a></span>
+            </NotAuthorized>
+        </AuthorizeView>      
     </div>
 
     <div class="content px-4">
